@@ -1,6 +1,6 @@
 export class Course {
-    name: any
-    marks: null
+    name
+    marks
     
     constructor(name) {
         this.name = name

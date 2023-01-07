@@ -1,11 +1,11 @@
 import { Chain } from './chain'
 
 export class Student {
-    name: string
-    courses: any
-    address: string
+    name
+    courses
+    address
 
-    constructor(name: string, chain: Chain) {
+    constructor(name, chain) {
         this.name = name
         this.courses = []
 

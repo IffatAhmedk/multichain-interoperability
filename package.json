@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "multichain-api.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "multichain-node": "^2.2.0-version1.0.4"
+    "multichain-node": "^2.2.0-version1.0.4",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
   },
   "devDependencies": {
     "@types/node": "^18.11.18"

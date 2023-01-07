@@ -3,12 +3,12 @@ import { exec } from 'child_process'
 
 
 export class Chain {
-    host: string
-    port: number
-    rpcName: string
-    rpcPassword: string
+    host
+    port
+    rpcName
+    rpcPassword
 
-    constructor(port: number, rpcPassword: string) {
+    constructor(port, rpcPassword) {
         this.host = "localhost"
         this.port = port
         this.rpcName = "multichainrpc"
@@ -16,7 +16,7 @@ export class Chain {
     }
 
 
-    createChain(chainName: string) {
+    static createChain(chainName) {
         exec(`multichain-util create ${chainName}`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${error}`)
@@ -25,9 +25,13 @@ export class Chain {
             console.log(`Output: ${stdout}`)
         })
         console.log(`Chain ${chainName} successfully created`)
+        // getRpcPort()
+        return {
+
+        }
     }
 
-    async establishConntection(): Promise<any> {
+    async establishConntection() {
         let connection;
         try {
             connection = await multichain({
@@ -42,7 +46,7 @@ export class Chain {
         return connection
     }
 
-    startDaemon(chainName: string) {
+    startDaemon(chainName) {
         exec(`multichaind ${chainName} -daemon`, (error, stdout, stderr) => {
             if (error) {
                 console.error(`Error: ${error}`)
@@ -53,7 +57,7 @@ export class Chain {
         console.log(`Chain ${chainName} successfully started`)
     }
 
-    getRpcPort (chainName: string) {
+    getRpcPort (chainName) {
         exec(`multichain-cli ${chainName} getinfo`, (error, stdout, stderr) => {
           if (error) {
             console.error(`Error: ${error}`)
@@ -64,8 +68,8 @@ export class Chain {
         })
       }
 
-    async createAddress(): Promise<any> {
-        let address: any;
+    async createAddress() {
+        let address;
         try {
             const connection = await multichain({
                 port: this.port,

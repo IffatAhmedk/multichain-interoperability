@@ -1,13 +1,25 @@
+import multichain from 'multichain-node'
+
+
 export class Course {
     name
-    marks
+    totalMarks
+    marksObtained
     
     constructor(name) {
         this.name = name
-        this.marks = null
+        this.totalMarks = 100
     }
 
-    setMarks(marks) {
-        this.marks = marks
+    
+    setMarks(chain, address, name, marks) {
+        return new Promise((resolve, reject) => {
+            chain.issue({ address, name, marks }, (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(result);
+            });
+        });
     }
 }

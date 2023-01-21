@@ -57,16 +57,16 @@ export class Chain {
         console.log(`Chain ${chainName} successfully started`)
     }
 
-    getRpcPort (chainName) {
+    getRpcPort(chainName) {
         exec(`multichain-cli ${chainName} getinfo`, (error, stdout, stderr) => {
-          if (error) {
-            console.error(`Error: ${error}`)
-            return
-          }
-          const info = JSON.parse(stdout)
-          return info.rpcport
+            if (error) {
+                console.error(`Error: ${error}`)
+                return
+            }
+            const info = JSON.parse(stdout)
+            return info.rpcport
         })
-      }
+    }
 
     async createAddress() {
         let address;
@@ -79,9 +79,39 @@ export class Chain {
             })
 
             address = await connection.getNewAddress()
+            await connection.grant({ addresses: address, permissions: "receive" }, (err, res) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log(`Address ${address} is now allowed to receive assets`);
+                }
+            });
+            console.log(address);
         } catch (error) {
             console.error(`Error: ${error.message}`)
         }
         return address
     }
+
+    
+    async issueTokens({ address, marks, courseName }) {
+        try {
+        const chain = await multichain({
+            port: this.port,
+            host: this.host,
+            user: this.rpcName,
+            pass: this.rpcPassword
+        })
+
+
+        console.log(address.toString());
+        await chain.issue({ address: address, asset: courseName, qty: marks, units: 1.0 }, (err, res) => {
+            console.log(res)
+            console.log(err)
+        });
+        } catch (error) {
+            console.error(`Error: ${error.message}`)
+        }
+    }
+
 }

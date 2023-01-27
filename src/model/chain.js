@@ -79,11 +79,13 @@ export class Chain {
             })
 
             address = await connection.getNewAddress()
+            
+
             await connection.grant({ addresses: address, permissions: "receive" }, (err, res) => {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(`Address ${address} is now allowed to receive assets`);
+                    console.log(`Address ${address} has been created with receiving rights`);
                 }
             });
             console.log(address);
@@ -103,15 +105,30 @@ export class Chain {
             pass: this.rpcPassword
         })
 
-
-        console.log(address.toString());
         await chain.issue({ address: address, asset: courseName, qty: marks, units: 1.0 }, (err, res) => {
             console.log(res)
-            console.log(err)
         });
         } catch (error) {
             console.error(`Error: ${error.message}`)
         }
     }
+
+    async transferTokens({ address, marks, courseName }) {
+        try {
+        const chain = await multichain({
+            port: this.port,
+            host: this.host,
+            user: this.rpcName,
+            pass: this.rpcPassword
+        })
+
+        await chain.issue({ address: address, asset: courseName, qty: marks, units: 1.0 }, (err, res) => {
+            console.log(res)
+        });
+        } catch (error) {
+            console.error(`Error: ${error.message}`)
+        }
+    }
+
 
 }

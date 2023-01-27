@@ -35,6 +35,9 @@ async function main() {
     marks: 70,
     courseName: anas.courses[1].name
   })
+
+  
+
 }
 
 const generateStudents = async function() {

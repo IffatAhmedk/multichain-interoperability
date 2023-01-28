@@ -113,17 +113,21 @@ export class Chain {
         }
     }
 
-    async transferTokens({ address, marks, courseName }) {
+    async transferTokens({ fromAddress, toAddress, amount, assetName }) {
         try {
-        const chain = await multichain({
+        const senderChain = await multichain({
             port: this.port,
             host: this.host,
             user: this.rpcName,
             pass: this.rpcPassword
         })
 
-        await chain.issue({ address: address, asset: courseName, qty: marks, units: 1.0 }, (err, res) => {
-            console.log(res)
+        await senderChain.sendFrom({from: fromAddress, to: toAddress, amount: [amount, assetName], sendall: false}, (err, result) => {
+            if (err) {
+                console.error(err);
+            } else {
+                console.log(result);
+            }
         });
         } catch (error) {
             console.error(`Error: ${error.message}`)

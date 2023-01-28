@@ -36,15 +36,8 @@ async function main() {
     courseName: anas.courses[1].name
   })
 
-  
+  chainNED.transferTokens()
 
 }
-
-const generateStudents = async function() {
-  const iffat = new Student('Iffat', chainNED, [ICS, automata]);
-  const anas = new Student('Anas', chainDHA, [ICS, automata]);
-}
-
-
 
 main()

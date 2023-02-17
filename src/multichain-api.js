@@ -29,14 +29,23 @@ async function main() {
     address: anas.address,
     marks: 70,
     courseName: anas.courses[0].name
-  })  
+  })
   chainDHA.issueTokens({
     address: anas.address,
     marks: 70,
     courseName: anas.courses[1].name
   })
 
-  chainNED.transferTokens()
+
+  const anasNED = await Student.createStudent('Anas', chainNED, [ICS, automata]);
+
+  chainNED.transferTokens({
+    fromAddress: anas.address,
+    toAddress: anasNED.address,
+    marks: anas.courses[0].marks,
+    courseName: anas.courses[0].name
+  }
+  )
 
 }
 

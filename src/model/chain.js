@@ -113,7 +113,7 @@ export class Chain {
         }
     }
 
-    async transferTokens({ fromAddress, toAddress, amount, assetName }) {
+    async transferTokens({ fromAddress, toAddress, marks, courseName }) {
         try {
         const senderChain = await multichain({
             port: this.port,
@@ -122,7 +122,7 @@ export class Chain {
             pass: this.rpcPassword
         })
 
-        await senderChain.sendFrom({from: fromAddress, to: toAddress, amount: [amount, assetName], sendall: false}, (err, result) => {
+        await senderChain.sendFrom({from: fromAddress, to: toAddress, amount: [marks, courseName], sendall: false}, (err, result) => {
             if (err) {
                 console.error(err);
             } else {
